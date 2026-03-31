@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UDAAN – Faculty Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:      #0a1628;
+  --navy-mid:  #0f2044;
+  --navy-light:#162a56;
+  --gold:      #c9a84c;
+  --gold-lt:   #e8c97a;
+  --gold-dk:   #9a7230;
+  --cream:     #f5f0e8;
+  --cream-dk:  #e8dfc8;
+  --text-body: #ddd5c0;
+  --text-muted:#8a9ab8;
+}
+
+body {
+  background: #060e1c;
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* ─── CARD ─── */
+.invitation {
+  width: 760px;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 1s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── BORDER FRAME ─── */
+.frame {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--gold-dk);
+  pointer-events: none;
+  z-index: 10;
+}
+.frame::before, .frame::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+}
+.frame::before { border: 1px solid rgba(201,168,76,0.25); }
+
+/* ─── CORNER ORNAMENTS ─── */
+.ornament {
+  position: absolute;
+  width: 28px; height: 28px;
+  z-index: 11;
+}
+.ornament::before, .ornament::after { content: ''; position: absolute; background: var(--gold); }
+.ornament-tl { top: 12px; left: 12px; }
+.ornament-tr { top: 12px; right: 12px; }
+.ornament-bl { bottom: 12px; left: 12px; }
+.ornament-br { bottom: 12px; right: 12px; }
+
+.ornament-tl::before { top: 0; left: 0; width: 12px; height: 2px; }
+.ornament-tl::after  { top: 0; left: 0; width: 2px; height: 12px; }
+.ornament-tr::before { top: 0; right: 0; width: 12px; height: 2px; }
+.ornament-tr::after  { top: 0; right: 0; width: 2px; height: 12px; }
+.ornament-bl::before { bottom: 0; left: 0; width: 12px; height: 2px; }
+.ornament-bl::after  { bottom: 0; left: 0; width: 2px; height: 12px; }
+.ornament-br::before { bottom: 0; right: 0; width: 12px; height: 2px; }
+.ornament-br::after  { bottom: 0; right: 0; width: 2px; height: 12px; }
+
+/* ─── HEADER STRIP ─── */
+.header-strip {
+  background: linear-gradient(135deg, #050e20 0%, var(--navy-mid) 50%, #070e1e 100%);
+  padding: 36px 60px 30px;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px solid var(--gold-dk);
+}
+
+.header-strip::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 60px; right: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.institution {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  opacity: 0;
+  animation: fadeIn 0.8s 0.3s ease forwards;
+}
+
+.presents-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeIn 0.8s 0.5s ease forwards;
+}
+
+.event-title {
+  font-family: 'Cinzel', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 3px;
+  line-height: 1.25;
+  text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fadeIn 0.8s 0.7s ease forwards;
+}
+
+.event-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--gold-lt);
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: fadeIn 0.8s 0.9s ease forwards;
+}
+
+.gold-rule {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 18px auto 0;
+  max-width: 360px;
+  opacity: 0;
+  animation: fadeIn 0.8s 1.1s ease forwards;
+}
+.gold-rule-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dk)); }
+.gold-rule-line:last-child { background: linear-gradient(90deg, var(--gold-dk), transparent); }
+.gold-rule-diamond { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── HERO VISUAL ─── */
+.hero {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeIn 1s 1.2s ease forwards;
+}
+
+/* SVG illustration of studio scene */
+.studio-scene {
+  width: 100%; height: 100%;
+  position: relative;
+  background: linear-gradient(160deg, #0a1832 0%, #081428 40%, #0c1e3a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.studio-scene::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 30% 50%, rgba(201,168,76,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 75% 50%, rgba(20,60,120,0.4) 0%, transparent 60%);
+}
+
+/* Decorative bokeh circles */
+.bokeh {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(12px);
+  opacity: 0.18;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 60px;
+}
+
+/* Podcast SVG illustration */
+.podcast-illustration {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* Mic stand with glow */
+.mic-group {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hero-text-col {
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.podcast-label {
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  padding: 5px 14px;
+  text-transform: uppercase;
+  align-self: flex-end;
+}
+
+.hero-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.5;
+  text-align: right;
+}
+
+.hero-quote-attr {
+  font-family: 'Lato', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-align: right;
+  text-transform: uppercase;
+}
+
+/* Waveform bars */
+.waveform {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  align-self: flex-end;
+}
+.wave-bar {
+  width: 3px;
+  background: var(--gold);
+  opacity: 0.6;
+  border-radius: 2px;
+  animation: wave 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes wave {
+  from { transform: scaleY(0.3); }
+  to   { transform: scaleY(1); }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 0%, transparent 60%, var(--navy) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-overlay-bottom {
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 40px;
+  background: linear-gradient(to top, var(--navy), transparent);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ─── BODY ─── */
+.body {
+  padding: 32px 60px 28px;
+  opacity: 0;
+  animation: fadeIn 0.8s 1.6s ease forwards;
+}
+
+.salutation {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--gold-lt);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.invite-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  border-left: 2px solid var(--gold-dk);
+  padding-left: 18px;
+}
+
+.invite-text strong {
+  font-weight: 600;
+  color: var(--gold-lt);
+}
+
+/* ─── DETAILS TABLE ─── */
+.details {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(201,168,76,0.2);
+  margin-bottom: 28px;
+}
+
+.details-header {
+  background: linear-gradient(90deg, rgba(201,168,76,0.12), transparent);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 36px 110px 1fr;
+  align-items: center;
+  gap: 0;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+  transition: background 0.2s;
+}
+.detail-row:last-child { border-bottom: none; }
+.detail-row:hover { background: rgba(201,168,76,0.04); }
+
+.detail-icon { font-size: 16px; opacity: 0.85; }
+.detail-key {
+  font-family: 'Lato', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.detail-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--cream);
+}
+.detail-sub {
+  display: block;
+  font-family: 'Lato', sans-serif;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-top: 1px;
+}
+
+/* ─── INSIGHT TEXT ─── */
+.insight {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text-body);
+  text-align: center;
+  margin-bottom: 28px;
+  line-height: 1.6;
+  padding: 0 20px;
+}
+.insight em {
+  color: var(--gold-lt);
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ─── HIGHLIGHTS ─── */
+.highlights {
+  border-top: 1px solid rgba(201,168,76,0.15);
+  padding-top: 20px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.hl-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.hl-divider { width: 1px; height: 30px; background: var(--gold-dk); flex-shrink: 0; }
+.hl-items { display: flex; gap: 16px; flex-wrap: wrap; }
+.hl-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--cream-dk);
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid rgba(201,168,76,0.25);
+  background: rgba(201,168,76,0.05);
+}
+.hl-item span { font-size: 14px; }
+
+/* ─── SIGNATURE ─── */
+.signature {
+  text-align: right;
+  padding-top: 6px;
+  border-top: 1px solid rgba(201,168,76,0.12);
+}
+.sig-warm {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.sig-name {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.sig-line {
+  display: inline-block;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dk));
+  margin-bottom: 6px;
+}
+
+/* ─── FOOTER ─── */
+.footer-strip {
+  background: linear-gradient(135deg, #050e1e, #060c1a);
+  border-top: 1px solid var(--gold-dk);
+  padding: 14px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.footer-strip::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 60px; right: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.4;
+}
+.footer-text {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--gold-dk);
+  text-transform: uppercase;
+}
+.footer-dots { display: flex; gap: 6px; }
+.footer-dot { width: 4px; height: 4px; background: var(--gold-dk); opacity: 0.5; }
+.footer-dot:nth-child(2) { opacity: 0.8; background: var(--gold); }
+
+</style>
+</head>
+<body>
+
+<div class="invitation">
+
+  <!-- Frame & Ornaments -->
+  <div class="frame"></div>
+  <div class="ornament ornament-tl"></div>
+  <div class="ornament ornament-tr"></div>
+  <div class="ornament ornament-bl"></div>
+  <div class="ornament ornament-br"></div>
+
+  <!-- ── HEADER ── -->
+  <div class="header-strip">
+    <div class="institution">School of Earth Sciences &nbsp;·&nbsp; PAHSU</div>
+    <div class="presents-line">presents</div>
+    <div class="event-title">UDAAN</div>
+    <div class="event-subtitle">Perspectives on the Future</div>
+    <div class="gold-rule">
+      <div class="gold-rule-line"></div>
+      <div class="gold-rule-diamond"></div>
+      <div class="gold-rule-line"></div>
+    </div>
+  </div>
+
+  <!-- ── HERO VISUAL ── -->
+  <div class="hero">
+    <div class="studio-scene">
+
+      <!-- Bokeh lights -->
+      <div class="bokeh" style="width:180px;height:180px;background:#c9a84c;top:-40px;left:60px;"></div>
+      <div class="bokeh" style="width:120px;height:120px;background:#1a4a9a;bottom:20px;left:160px;"></div>
+      <div class="bokeh" style="width:80px;height:80px;background:#c9a84c;top:30px;right:100px;opacity:0.1;"></div>
+
+      <!-- Studio SVG scene -->
+      <svg width="500" height="240" viewBox="0 0 500 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0;z-index:2;">
+
+        <!-- Studio desk surface -->
+        <rect x="60" y="160" width="360" height="10" rx="2" fill="#1a2d4e"/>
+        <rect x="60" y="168" width="360" height="3" fill="#0f1e38"/>
+
+        <!-- Desk legs -->
+        <rect x="80" y="170" width="8" height="50" fill="#13243d"/>
+        <rect x="392" y="170" width="8" height="50" fill="#13243d"/>
+
+        <!-- Monitor / screen left person -->
+        <rect x="80" y="100" width="100" height="62" rx="4" fill="#0d1b30"/>
+        <rect x="82" y="102" width="96" height="58" rx="3" fill="#0a3060"/>
+        <rect x="84" y="104" width="92" height="54" rx="2" fill="#0c2040" opacity="0.8"/>
+        <!-- Screen content lines -->
+        <rect x="90" y="112" width="60" height="3" rx="1" fill="#c9a84c" opacity="0.5"/>
+        <rect x="90" y="120" width="76" height="2" rx="1" fill="#6a88aa" opacity="0.6"/>
+        <rect x="90" y="127" width="50" height="2" rx="1" fill="#6a88aa" opacity="0.4"/>
+        <rect x="90" y="134" width="65" height="2" rx="1" fill="#6a88aa" opacity="0.4"/>
+        <rect x="90" y="141" width="40" height="2" rx="1" fill="#6a88aa" opacity="0.3"/>
+        <!-- Monitor stand -->
+        <rect x="124" y="162" width="12" height="8" fill="#1a2d4e"/>
+        <rect x="112" y="168" width="36" height="3" rx="1" fill="#1a2d4e"/>
+
+        <!-- Microphone boom arm (left side) -->
+        <line x1="90" y1="160" x2="90" y2="95" stroke="#2a3d5e" stroke-width="3"/>
+        <line x1="90" y1="95" x2="148" y2="95" stroke="#2a3d5e" stroke-width="3"/>
+        <!-- Mic head -->
+        <ellipse cx="148" cy="88" rx="10" ry="14" fill="#1e3050"/>
+        <ellipse cx="148" cy="88" rx="7" ry="11" fill="#243a60"/>
+        <!-- Mic grille lines -->
+        <line x1="141" y1="88" x2="155" y2="88" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+        <line x1="141" y1="84" x2="155" y2="84" stroke="#c9a84c" stroke-width="0.8" opacity="0.3"/>
+        <line x1="141" y1="92" x2="155" y2="92" stroke="#c9a84c" stroke-width="0.8" opacity="0.3"/>
+        <!-- Mic glow -->
+        <ellipse cx="148" cy="88" rx="14" ry="18" fill="#c9a84c" opacity="0.06"/>
+
+        <!-- Left person (teacher / faculty) -->
+        <!-- Body -->
+        <rect x="120" y="110" width="46" height="52" rx="10" fill="#1a3058"/>
+        <!-- Jacket lapels -->
+        <path d="M143 110 L133 120 L143 130" fill="#0d1f3a"/>
+        <path d="M143 110 L153 120 L143 130" fill="#0d1f3a"/>
+        <!-- Tie/shirt -->
+        <rect x="140" y="120" width="6" height="20" rx="1" fill="#c9a84c" opacity="0.7"/>
+        <!-- Head -->
+        <ellipse cx="143" cy="100" rx="16" ry="18" fill="#d4956a"/>
+        <!-- Hair -->
+        <path d="M127 96 Q130 82 143 80 Q156 82 159 96" fill="#3a2010"/>
+        <!-- Eye glasses -->
+        <rect x="133" y="97" width="8" height="5" rx="2" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.8"/>
+        <rect x="143" y="97" width="8" height="5" rx="2" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.8"/>
+        <line x1="141" y1="99" x2="143" y2="99" stroke="#c9a84c" stroke-width="1" opacity="0.8"/>
+        <!-- Mouth – speaking pose -->
+        <path d="M139 107 Q143 110 147 107" stroke="#c25050" stroke-width="1.2" fill="none"/>
+        <!-- Hand holding notes -->
+        <ellipse cx="130" cy="145" rx="9" ry="6" fill="#c4855e"/>
+        <rect x="126" y="136" width="18" height="14" rx="2" fill="#f5f0e8" opacity="0.9"/>
+        <rect x="128" y="139" width="10" height="1.5" rx="0.5" fill="#8a9ab8"/>
+        <rect x="128" y="143" width="12" height="1.5" rx="0.5" fill="#8a9ab8"/>
+        <rect x="128" y="147" width="8" height="1.5" rx="0.5" fill="#8a9ab8"/>
+
+        <!-- Headphones on desk / cable -->
+        <path d="M200 145 Q200 135 215 130" stroke="#2a4060" stroke-width="2.5" fill="none"/>
+        <!-- Headphone -->
+        <path d="M200 145 Q198 138 200 132 Q204 125 210 126 Q216 127 216 134 Q216 140 213 145" stroke="#3a5888" stroke-width="3" fill="none"/>
+        <circle cx="200" cy="146" r="5" fill="#3a5888"/>
+        <circle cx="213" cy="146" r="5" fill="#3a5888"/>
+        <circle cx="200" cy="146" r="2.5" fill="#c9a84c" opacity="0.5"/>
+        <circle cx="213" cy="146" r="2.5" fill="#c9a84c" opacity="0.5"/>
+
+        <!-- Right microphone boom arm -->
+        <line x1="380" y1="160" x2="380" y2="95" stroke="#2a3d5e" stroke-width="3"/>
+        <line x1="380" y1="95" x2="322" y2="95" stroke="#2a3d5e" stroke-width="3"/>
+        <!-- Mic head right -->
+        <ellipse cx="322" cy="88" rx="10" ry="14" fill="#1e3050"/>
+        <ellipse cx="322" cy="88" rx="7" ry="11" fill="#243a60"/>
+        <line x1="315" y1="88" x2="329" y2="88" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+        <line x1="315" y1="84" x2="329" y2="84" stroke="#c9a84c" stroke-width="0.8" opacity="0.3"/>
+        <line x1="315" y1="92" x2="329" y2="92" stroke="#c9a84c" stroke-width="0.8" opacity="0.3"/>
+        <ellipse cx="322" cy="88" rx="14" ry="18" fill="#c9a84c" opacity="0.06"/>
+
+        <!-- Right person (student) -->
+        <rect x="304" y="110" width="46" height="52" rx="10" fill="#16294a"/>
+        <!-- Casual top -->
+        <rect x="316" y="110" width="22" height="52" rx="4" fill="#1e3a5c"/>
+        <!-- Head -->
+        <ellipse cx="327" cy="100" rx="16" ry="18" fill="#b07850"/>
+        <!-- Hair -->
+        <path d="M311 98 Q313 83 327 81 Q341 83 343 98" fill="#1a0a00"/>
+        <!-- Eyes -->
+        <circle cx="321" cy="98" r="2.5" fill="#2a1800"/>
+        <circle cx="333" cy="98" r="2.5" fill="#2a1800"/>
+        <!-- Smile – listening / engaged -->
+        <path d="M322 107 Q327 111 332 107" stroke="#c25050" stroke-width="1.2" fill="none"/>
+        <!-- Pen/pencil in hand -->
+        <rect x="343" y="135" width="3" height="18" rx="1" fill="#f5e090" transform="rotate(-15 344 144)"/>
+
+        <!-- On-air indicator -->
+        <rect x="215" y="40" width="70" height="24" rx="3" fill="#0a1828"/>
+        <rect x="217" y="42" width="66" height="20" rx="2" fill="#0d2040"/>
+        <circle cx="226" cy="52" r="5" fill="#cc2222"/>
+        <circle cx="226" cy="52" r="3" fill="#ff4444">
+          <animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/>
+        </circle>
+        <text x="236" y="57" font-family="monospace" font-size="9" fill="#e8c97a" letter-spacing="1">ON AIR</text>
+
+        <!-- Sound wave arcs around left mic -->
+        <path d="M162 78 Q172 88 162 98" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M167 73 Q181 88 167 103" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.25"/>
+
+        <!-- Sound wave arcs around right mic -->
+        <path d="M308 78 Q298 88 308 98" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M303 73 Q289 88 303 103" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.25"/>
+
+        <!-- Studio back-wall panels -->
+        <rect x="60" y="30" width="45" height="70" rx="2" fill="#0c1e36" opacity="0.6"/>
+        <rect x="68" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="75" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="82" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="89" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="96" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+
+        <rect x="365" y="30" width="75" height="70" rx="2" fill="#0c1e36" opacity="0.6"/>
+        <rect x="370" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="377" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="384" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="391" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="398" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="405" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="412" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="419" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="426" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+        <rect x="433" y="38" width="3" height="54" fill="#1a3050" opacity="0.5"/>
+
+        <!-- Audio mixer on desk -->
+        <rect x="220" y="148" width="80" height="16" rx="2" fill="#0d1c32"/>
+        <rect x="222" y="150" width="76" height="12" rx="1" fill="#0a1628"/>
+        <!-- Fader knobs -->
+        <circle cx="232" cy="156" r="3" fill="#2a4060"/>
+        <circle cx="246" cy="156" r="3" fill="#2a4060"/>
+        <circle cx="260" cy="156" r="3" fill="#2a4060"/>
+        <circle cx="274" cy="156" r="3" fill="#c9a84c" opacity="0.7"/>
+        <circle cx="288" cy="156" r="3" fill="#2a4060"/>
+        <!-- VU meter -->
+        <rect x="296" y="151" width="4" height="10" rx="1" fill="#1a3050"/>
+        <rect x="296" y="157" width="4" height="4" rx="0.5" fill="#44aa44"/>
+
+      </svg>
+
+      <!-- Podcast label badge -->
+      <div style="position:absolute;top:16px;right:0;background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:9px;font-weight:700;letter-spacing:4px;padding:6px 18px;text-transform:uppercase;z-index:5;">
+        PODCAST SESSION
+      </div>
+
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay-bottom"></div>
+  </div>
+
+  <!-- ── BODY ── -->
+  <div class="body">
+
+    <div class="salutation">Respected Faculty,</div>
+
+    <div class="invite-text">
+      We warmly invite you to be a part of a <strong>special podcast on educational innovation</strong> — an intimate conversation where your experience, wisdom, and vision will inspire the next generation of earth scientists and thinkers.
+    </div>
+
+    <!-- Details -->
+    <div class="details">
+      <div class="details-header">Event Details</div>
+
+      <div class="detail-row">
+        <div class="detail-icon">📅</div>
+        <div class="detail-key">New Date</div>
+        <div class="detail-val">Thursday, April 2nd, 2026</div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-icon">🕤</div>
+        <div class="detail-key">Time</div>
+        <div class="detail-val">
+          9:30 AM Onwards
+          <span class="detail-sub">Broadcast details to follow</span>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-icon">🎙️</div>
+        <div class="detail-key">Location</div>
+        <div class="detail-val">School of Earth Sciences Studio</div>
+      </div>
+    </div>
+
+    <!-- Insight -->
+    <div class="insight">
+      "Your insights are <em>vital to our mission.</em><br>Let's discuss and inspire."
+    </div>
+
+    <!-- Highlights -->
+    <div class="highlights">
+      <div class="hl-label">Also Featuring</div>
+      <div class="hl-divider"></div>
+      <div class="hl-items">
+        <div class="hl-item"><span>🎬</span> Documentary Screening</div>
+        <div class="hl-item"><span>🔭</span> Science Center Visit</div>
+      </div>
+    </div>
+
+    <!-- Signature -->
+    <div class="signature">
+      <div class="sig-warm">With warm regards,</div>
+      <div class="sig-line"></div>
+      <div class="sig-name">The Organizing Team · UDAAN 2026</div>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer-strip">
+    <div class="footer-text">School of Earth Sciences &nbsp;·&nbsp; PAHSU</div>
+    <div class="footer-dots">
+      <div class="footer-dot"></div>
+      <div class="footer-dot"></div>
+      <div class="footer-dot"></div>
+    </div>
+    <div class="footer-text">UDAAN &nbsp;·&nbsp; April 2026</div>
+  </div>
+
+</div>
+
+</body>
+</html>
